@@ -1,0 +1,71 @@
+TAILF-TOBBE-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, NOTIFICATION-TYPE, Unsigned32
+        FROM SNMPv2-SMI
+    DateAndTime, TruthValue
+        FROM SNMPv2-TC
+    SnmpAdminString
+        FROM SNMP-FRAMEWORK-MIB
+    tfModules
+        FROM TAILF-TOP-MIB
+    OBJECT-GROUP, NOTIFICATION-GROUP, MODULE-COMPLIANCE
+        FROM SNMPv2-CONF;
+
+
+tfTobbeMIB MODULE-IDENTITY
+    LAST-UPDATED "201610080000Z"
+    ORGANIZATION "Tail-f Systems AB"
+    CONTACT-INFO
+        "support@tail-f.com"
+    DESCRIPTION
+        "Alarm MIB for Tail-f Systems. This MIB represents alarms as
+         states, where a row in the alarm table corresponds to a
+         device, an object within the device and an unique alarm type.
+         If the severity of an alarm or a the clear state is changed
+         this is an update to an existing alarm entry and not a new.
+         When the resource reports a clear on the alarm the alarm
+         entry still exists until administrative processes purges
+         the alarm list. These procedures are out of the scope for
+         this module."
+     REVISION "201610080000Z"
+     DESCRIPTION
+         "Released as part of NSO-4.2.2.
+
+          Added tfTobbeStateChangeText."
+     REVISION "201208300000Z"
+     DESCRIPTION
+         "Released as part of NCS-2.0.
+
+          Changed tfTobbeType to be a string.
+          Added tfTobbeObjectStr.
+          Added tfTobbeSpecificProblem."
+
+     REVISION "201103010000Z"
+     DESCRIPTION
+         "Initial version of this MIB module."
+     ::= { tfModules 103 }
+
+--==========
+--==Groups==
+--==========
+
+tfTobbeObjects         OBJECT IDENTIFIER ::= { tfTobbeMIB 1 }
+
+--======================
+--== Alarm table==
+--======================
+tfTobbes OBJECT IDENTIFIER ::= { tfTobbeObjects 1 }
+
+tfTobbeNumber OBJECT-TYPE
+    SYNTAX       Counter64
+    MAX-ACCESS   read-only
+    STATUS       current
+    DESCRIPTION
+        "This object shows the total number of of entries in the
+         tfTobbeTable."
+   DEFVAL { 18446744073709551615 }
+    ::= { tfTobbes 1 }
+
+
+END
