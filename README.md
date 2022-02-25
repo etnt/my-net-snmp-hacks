@@ -30,14 +30,16 @@ instrumented, step 2-4 can be skipped.
    In the /etc/snmp/snmpd.conf , make sure the agentX stufff is enabled;
    like this:
 
-   #
-   #  AgentX Sub-agents
-   #
-   # Run as an AgentX master agent
-   master          agentx
-   # Listen for network connections (from localhost)
-   # rather than the default named socket /var/agentx/master
-   agentXSocket    tcp:localhost:1705
+```
+     #
+     #  AgentX Sub-agents
+     #
+     # Run as an AgentX master agent
+     master          agentx
+     # Listen for network connections (from localhost)
+     # rather than the default named socket /var/agentx/master
+     agentXSocket    tcp:localhost:1705
+```
 
 6. Restart the snmpd server: sudo systemctl restart snmpd
 
@@ -45,4 +47,7 @@ instrumented, step 2-4 can be skipped.
 
 8. You should now be able to retrieve data from your MIB, like in:
 
-   sudo snmpwalk -v2c -c testing -m +TAILF-TOP-MIB:TAILF-TOBBE-MIB 127.0.0.1 TAILF-TOBBE-MIB::tfTobbeMIB
+```
+    sudo snmpwalk -v2c -c testing -m +TAILF-TOP-MIB:TAILF-TOBBE-MIB 127.0.0.1 TAILF-TOBBE-MIB::tfTobbeMIB
+    TAILF-TOBBE-MIB::tfTobbeNumber.0 = Counter64: 18446744073709551615
+```
